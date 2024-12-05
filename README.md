@@ -1,5 +1,5 @@
 # MLOps - Cardiotocografias (CTGs)
-Este repositório contém a prática desenvolvida na disciplina de Cultura e Práticas DataOps e MLOps do curso de Especialização em Inteligência Artificial e Aprendizado de Máquina da PUC Minas.
+Este repositório contém o exercício prático desenvolvido na disciplina de Cultura e Práticas DataOps e MLOps do curso de Especialização em Inteligência Artificial e Aprendizado de Máquina da PUC Minas.
 
 ### Introdução
 
