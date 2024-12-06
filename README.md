@@ -2,29 +2,41 @@
 
 This repository contains the practical exercise developed in the "Culture and Practices of DataOps and MLOps" course, part of the Specialization in Artificial Intelligence and Machine Learning at PUC Minas.
 
-### Introduction
+## Introduction
 
 "Cardiotocography (CTG) is a non-invasive biophysical method for assessing fetal well-being. It involves the graphical recording of fetal heart rate and uterine contractions." - [Wikipedia](https://pt.wikipedia.org/wiki/Cardiotocografia)
 
+The exam helps detect signs of fetal distress (when the fetus is not receiving enough oxygen during labor). If the exam results indicate a risk of fetal distress, additional measures can be taken to protect the health of the fetus and the mother.
 
-### Installation
+## Objective
+
+The objective of this practice is the creation of pipelines using a dataset that presents the main characteristics extracted from the exams.
+
+The predictive model used classifies the exam readings into three classes:
+
+- Normal: labor is progressing normally;
+- Suspicious: the baby shows some signs of risk and requires special attention;
+- Sick: the baby is already in fetal distress, and the delivery should be directed towards a cesarean section.
+
+
+## Installation
 
 - [Anaconda Python](https://www.anaconda.com/)
-- [VSCode](https://code.visualstudio.com/) ou [PyCharm](https://www.jetbrains.com/pt-br/pycharm/)
+- [VSCode](https://code.visualstudio.com/) or [PyCharm](https://www.jetbrains.com/pt-br/pycharm/)
 
-### Run
+## Run
 
 - Access the project directory via terminal.
   
-- Create the environment and install the necessary packages using the environment.yml file contained in the directory.
+- Create the environment and install the necessary packages using the environment.yml file contained in the directory:
 -  ```$ conda env create -f environment.yml```
 
-- Activate the environment.
+- Activate the environment:
 -  ```$ conda activate mlops_cardiotocografias_env```
   
-- List the created environments.
+- List the created environments:
 -  ```$ conda env list```
 
   
-- List the installed packages in the environment.
-- ```$ pip freeze``` ou ```$ pip list```
+- List the installed packages in the environment:
+- ```$ pip freeze``` or ```$ pip list```
