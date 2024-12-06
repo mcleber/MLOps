@@ -41,4 +41,4 @@ The predictive model used classifies the exam readings into three classes:
 - List the installed packages in the environment:
 - ```$ pip freeze``` or ```$ pip list```
 
-- Run ```train.py```
+- Run ```$ python train.py```
