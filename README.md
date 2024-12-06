@@ -23,6 +23,8 @@ The predictive model used classifies the exam readings into three classes:
 
 - [Anaconda Python](https://www.anaconda.com/)
 - [VSCode](https://code.visualstudio.com/) or [PyCharm](https://www.jetbrains.com/pt-br/pycharm/)
+- [Docker Desktop](https://www.docker.com/)
+- [Git Bash](https://git-scm.com/downloads)
 
 ## Run
 
