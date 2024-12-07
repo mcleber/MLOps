@@ -40,9 +40,9 @@ def read_data():
     """
     url = 'raw.githubusercontent.com'
     username = 'mcleber'
-    repository = 'MLOps_Cardiotocography/dataset'
+    repository = 'MLOps_Cardiotocography/refs/heads/main/dataset/'
     file_name = 'fetal_health_reduced.csv'
-    data = pd.read_csv(f'https://{url}/{username}/{repository}/main/{file_name}')
+    data = pd.read_csv(f'https://{url}/{username}/{repository}/master/{file_name}')
 
     X = data.drop(["fetal_health"], axis=1)
     y = data["fetal_health"]
