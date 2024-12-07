@@ -38,7 +38,12 @@ def read_data():
         X (pandas.DataFrame): The feature matrix of shape (n_samples, n_features).
         y (pandas.Series): The target vector of shape (n_samples,).
     """
-    data = pd.read_csv('https://raw.githubusercontent.com/mcleber/MLOps_Cardiotocography/refs/heads/main/dataset/fetal_health_reduced.csv')
+    url = 'raw.githubusercontent.com'
+    username = 'mcleber'
+    repository = 'MLOps_Cardiotocography/refs/heads/main/dataset'
+    file_name = 'fetal_health_reduced.csv'
+    #data = pd.read_csv(f'https://{url}/{username}/{repository}/main/{file_name}')
+    data = pd.read_csv(f'https://{url}/{username}/{repository}/{file_name}')
 
     X = data.drop(["fetal_health"], axis=1)
     y = data["fetal_health"]
@@ -106,7 +111,7 @@ def config_mlflow():
     Sets the MLFLOW_TRACKING_USERNAME and MLFLOW_TRACKING_PASSWORD environment
      variables to provide authentication for accessing the MLflow tracking server.
 
-    Sets the MLflow tracking URI to 'https://dagshub.com/renansantosmendes/mlops-ead.mlflow'
+    Sets the MLflow tracking URI to 'https://dagshub.com/clebermoretti/mlops_cardiotocography.mlflow'
     to specify the location where the experiment data will be logged.
 
     Enables autologging of TensorFlow models by calling `mlflow.tensorflow.autolog()`.
@@ -119,9 +124,9 @@ def config_mlflow():
     Returns:
         None
     """
-    os.environ['MLFLOW_TRACKING_USERNAME'] = 'renansantosmendes'
-    os.environ['MLFLOW_TRACKING_PASSWORD'] = '6d730ef4a90b1caf28fbb01e5748f0874fda6077'
-    mlflow.set_tracking_uri('https://dagshub.com/renansantosmendes/puc_lectures_mlops.mlflow')
+    os.environ['MLFLOW_TRACKING_USERNAME'] = 'clebermoretti'
+    os.environ['MLFLOW_TRACKING_PASSWORD'] = '212c96d01463f74f13aa8bcd6de0b46450851de1'
+    mlflow.set_tracking_uri('https://dagshub.com/clebermoretti/mlops_cardiotocography.mlflow')
 
     mlflow.tensorflow.autolog(log_models=True,
                               log_input_examples=True,
@@ -143,7 +148,7 @@ def train_model(model, X_train, y_train, is_train=True):
     Returns:
     None
     """
-    with mlflow.start_run(run_name='experiment_mlops_ead') as run:
+    with mlflow.start_run(run_name='experiment_mlops_cardiotocography') as run:
         model.fit(X_train,
                   y_train,
                   epochs=50,
