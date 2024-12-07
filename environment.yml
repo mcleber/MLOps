@@ -1,4 +1,4 @@
-name: mlops_cardiotocografias_env
+name: mlops_cardiotocography_env
 dependencies:
   - python=3.9
   - pip
