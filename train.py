@@ -38,11 +38,7 @@ def read_data():
         X (pandas.DataFrame): The feature matrix of shape (n_samples, n_features).
         y (pandas.Series): The target vector of shape (n_samples,).
     """
-    url = 'raw.githubusercontent.com'
-    username = 'mcleber'
-    repository = 'MLOps_Cardiotocography/refs/heads/main/dataset/'
-    file_name = 'fetal_health_reduced.csv'
-    data = pd.read_csv(f'https://{url}/{username}/{repository}/master/{file_name}')
+    data = pd.read_csv('https://raw.githubusercontent.com/mcleber/MLOps_Cardiotocography/refs/heads/main/dataset/fetal_health_reduced.csv')
 
     X = data.drop(["fetal_health"], axis=1)
     y = data["fetal_health"]
