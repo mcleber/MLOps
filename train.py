@@ -39,10 +39,10 @@ def read_data():
         y (pandas.Series): The target vector of shape (n_samples,).
     """
     url = 'raw.githubusercontent.com'
-    username = 'renansantosmendes'
-    repository = 'lectures-cdas-2023'
+    username = 'mcleber'
+    repository = 'MLOps_Cardiotocography/dataset'
     file_name = 'fetal_health_reduced.csv'
-    data = pd.read_csv(f'https://{url}/{username}/{repository}/master/{file_name}')
+    data = pd.read_csv(f'https://{url}/{username}/{repository}/main/{file_name}')
 
     X = data.drop(["fetal_health"], axis=1)
     y = data["fetal_health"]
