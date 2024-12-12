@@ -1,117 +1,50 @@
-import os
-import mlflow
-import numpy as np
-from pydantic import BaseModel
 from fastapi import FastAPI
 
+"""
+    Creating an Application with FastAPI
 
-class FetalHealthData(BaseModel):
-    accelerations: float
-    fetal_movement: float
-    uterine_contractions: float
-    severe_decelerations: float
+    This FastAPI application is designed to provide endpoints for checking the health status 
+    of the API and for making predictions related to fetal health. It has the following endpoints:
 
+    1. GET /: Returns the health status of the API.
+    2. POST /predict: Makes a prediction using a model (currently returning a placeholder value).
+"""
 
+# Initialize the FastAPI application with a custom title and tags for documentation
 app = FastAPI(title="Fetal Health API",
-              openapi_tags=[
-                  {
-                      "name": "Health",
-                      "description": "Get api health"
-                  },
-                  {
-                      "name": "Prediction",
-                      "description": "Model prediction"
-                  }
-              ])
+                openapi_tags=[ 
+                    {
+                        "name": "Health",  # Tag for health-related endpoints
+                        "description": "Get API health status"  # Description of the health tag
+                    }, 
+                    {
+                        "name": "Prediction",  # Tag for prediction-related endpoints
+                        "description": "Model prediction"  # Description of the prediction tag
+                    }
+                ])
 
-
-def load_model():
-    """
-    Loads a pre-trained model from an MLflow server.
-
-    This function connects to an MLflow server using the provided tracking URI, username,
-     and password.
-    It retrieves the latest version of the 'fetal_health' model registered on the server.
-    The function then loads the model using the specified run ID and returns the loaded model.
-
-    Returns:
-        loaded_model: The loaded pre-trained model.
-
-    Raises:
-        None
-    """
-    print('reading model...')
-    MLFLOW_TRACKING_URI = 'https://dagshub.com/renansantosmendes/mlops-ead.mlflow'
-    MLFLOW_TRACKING_USERNAME = 'renansantosmendes'
-    MLFLOW_TRACKING_PASSWORD = 'b63baf8c662a23fa00deb74ba86600278769e5dd'
-    os.environ['MLFLOW_TRACKING_USERNAME'] = MLFLOW_TRACKING_USERNAME
-    os.environ['MLFLOW_TRACKING_PASSWORD'] = MLFLOW_TRACKING_PASSWORD
-    print('setting mlflow...')
-    mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
-    print('creating client..')
-    client = mlflow.MlflowClient(tracking_uri=MLFLOW_TRACKING_URI)
-    print('getting registered model...')
-    registered_model = client.get_registered_model('fetal_health')
-    print('read model...')
-    run_id = registered_model.latest_versions[-1].run_id
-    logged_model = f'runs:/{run_id}/model'
-    loaded_model = mlflow.pyfunc.load_model(logged_model)
-    print(loaded_model)
-    return loaded_model
-
-
-@app.on_event(event_type='startup')
-def startup_event():
-    """
-    A function that is called when the application starts up. It loads a model into the
-    global variable `loaded_model`.
-
-    Parameters:
-        None
-
-    Returns:
-        None
-    """
-    global loaded_model
-    loaded_model = load_model()
-
-
+# Define a health check endpoint to check the status of the API
 @app.get(path='/',
-         tags=['Health'])
+            tags=['Health'])
 def api_health():
     """
-    A function that represents the health endpoint of the API.
-
+    Health check endpoint to verify if the API is up and running.
+    
     Returns:
-        dict: A dictionary containing the status of the API, with the key "status" and
-        the value "healthy".
+        dict: A JSON response indicating the health status of the API.
     """
-    return {"status": "healthy"}
+    return {"status": "healthy"}  # Returns a JSON response indicating the API is healthy
 
-
+# Define a prediction endpoint to make predictions using a model
 @app.post(path='/predict',
-          tags=['Prediction'])
-def predict(request: FetalHealthData):
+            tags=['Prediction'])
+def predict():
     """
-    Predicts the fetal health based on the given request data.
-
-    Args:
-        request (FetalHealthData): The request data containing the fetal health parameters.
-
+    Prediction endpoint to simulate making a model prediction.
+    
+    This is a placeholder function and currently returns a fixed prediction value (0).
+    
     Returns:
-        dict: A dictionary containing the prediction of the fetal health.
-
-    Raises:
-        None
+        dict: A JSON response containing the prediction value.
     """
-    global loaded_model
-    received_data = np.array([
-        request.accelerations,
-        request.fetal_movement,
-        request.uterine_contractions,
-        request.severe_decelerations,
-    ]).reshape(1, -1)
-    print(received_data)
-    prediction = loaded_model.predict(received_data)
-    print(prediction)
-    return {"prediction": str(np.argmax(prediction[0]))}
+    return {"prediction": 0}  # Returns a prediction (in this case, just a placeholder value of 0)
