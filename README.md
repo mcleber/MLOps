@@ -44,3 +44,24 @@ The predictive model used classifies the exam readings into three classes:
 - ```$ pip freeze``` or ```$ pip list```
 
 - Run ```$ python train.py```
+
+## Accessing an Application with FastAPI
+
+- Starting the server and creating documentation:
+
+- ```$ uvicorn app.main:app --reload```
+
+> ```Uvicorn``` is a high-performance ASGI (Asynchronous Server Gateway Interface) server for Python applications.
+
+> ```app.``` is the directory.
+
+> ```main``` is the name of the file (without the .py extension).
+
+> ```:app``` is the name of the FastAPI instance in the code.
+
+> The ```--reload``` flag makes the server automatically restart when there are changes in the code.
+
+- In the browser:
+
+- ```http://127.0.0.1:8000/docs```
+
