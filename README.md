@@ -45,8 +45,9 @@ The predictive model used classifies the exam readings into three classes:
 
 - Run ```$ python train.py```
 
--- Other Conda commands:
-Update all packages in the environment
+#### Other Conda commands
+
+Update all packages in the environment:
 
 - ```$conda env update -f environment.yml```
 
