@@ -125,7 +125,7 @@ def config_mlflow():
         None
     """
     os.environ['MLFLOW_TRACKING_USERNAME'] = 'clebermoretti'
-    os.environ['MLFLOW_TRACKING_PASSWORD'] = '212c96d01463f74f13aa8bcd6de0b46450851de1'
+    os.environ['MLFLOW_TRACKING_PASSWORD'] = '6db90884edf3ffebfc50a51614a22e5539b7c4dd'
     mlflow.set_tracking_uri('https://dagshub.com/clebermoretti/mlops_cardiotocography.mlflow')
 
     mlflow.tensorflow.autolog(log_models=True,
