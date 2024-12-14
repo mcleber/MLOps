@@ -49,7 +49,7 @@ The predictive model used classifies the exam readings into three classes:
 
 - Update all packages in the environment:
 
-- ```$conda env update -f environment.yml```
+- ```$ conda env update -f environment.yml```
 
 ## Accessing an Application with FastAPI
 
