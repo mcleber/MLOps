@@ -1,6 +1,5 @@
 import os
 import mlflow
-from mlflow.exceptions import MlflowException
 import json
 import uvicorn
 import numpy as np
@@ -8,7 +7,7 @@ from pydantic import BaseModel
 from fastapi import FastAPI
 
 
-class FetalHeathData(BaseModel):
+class FetalHealthData(BaseModel):
     accelerations: float
     fetal_movement: float
     uterine_contractions: float
@@ -29,56 +28,90 @@ app = FastAPI(title="Fetal Health API",
 
 
 def load_model():
-    print("reading model...")
+    """
+    Loads a pre-trained model from an MLflow server.
 
+    This function connects to an MLflow server using the provided tracking URI, username,
+     and password.
+    It retrieves the latest version of the 'fetal_health' model registered on the server.
+    The function then loads the model using the specified run ID and returns the loaded model.
+
+    Returns:
+        loaded_model: The loaded pre-trained model.
+
+    Raises:
+        None
+    """
+    print('reading model...')
     MLFLOW_TRACKING_URI = 'https://dagshub.com/clebermoretti/mlops_cardiotocography.mlflow'
     MLFLOW_TRACKING_USERNAME = 'clebermoretti'
     MLFLOW_TRACKING_PASSWORD = 'c6b0c9924c4810d3edd0945b15c2d0a6f2125ff1'
-    
     os.environ['MLFLOW_TRACKING_USERNAME'] = MLFLOW_TRACKING_USERNAME
     os.environ['MLFLOW_TRACKING_PASSWORD'] = MLFLOW_TRACKING_PASSWORD
 
     print("setting mlflow...")
-
     mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
 
-    try:
-        print("creating client...")
-        client = mlflow.MlflowClient(tracking_uri=MLFLOW_TRACKING_URI)
+    print("creating client...")
+    client = mlflow.MlflowClient(tracking_uri=MLFLOW_TRACKING_URI)
 
-        print("getting registered model...")
-        registered_model = client.get_registered_model('fetal_health')
+    print("getting registered model...")
+    registered_model = client.get_registered_model('fetal_health')
 
-        if not registered_model.latest_versions:
-            raise ValueError("No versions found for the model 'fetal_health'.")
+    print("read model...")
+    run_id = registered_model.latest_versions[-1].run_id
+    logged_model = f'runs:/{run_id}/model'
+    loaded_model = mlflow.pyfunc.load_model(logged_model)
 
-        print("reading model...")
-        run_id = registered_model.latest_versions[-1].run_id
-        logged_model = f'runs:/{run_id}/model'
+    print(loaded_model)
+    return loaded_model
 
-        loaded_model = mlflow.pyfunc.load_model(logged_model)
-        print("Model loaded successfully.")
-        return loaded_model
 
-    except MlflowException as e:
-        print(f"Error interacting with MLflow: {e}")
-    except ValueError as e:
-        print(f"Model version error: {e}")
-    except Exception as e:
-        print(f"Unexpected error: {e}")
+@app.on_event(event_type='startup')
+def startup_event():
+	"""
+    A function that is called when the application starts up. It loads a model into the
+    global variable `loaded_model`.
+
+    Parameters:
+        None
+
+    Returns:
+        None
+    """
+	global loaded_model
+	loaded_model = load_model()
 
 
 @app.get(path='/',
-            tags=['Health'])
+         tags=['Health'])
 def api_health():
+    """
+    A function that represents the health endpoint of the API.
+
+    Returns:
+        dict: A dictionary containing the status of the API, with the key "status" and
+        the value "healthy".
+    """
     return {"status": "healthy"}
 
 
 @app.post(path='/predict',
-            tags=['Prediction'])
-def predict(request: FetalHeathData):
-    loaded_model = load_model()
+          tags=['Prediction'])
+def predict(request: FetalHealthData):
+    """
+    Predicts the fetal health based on the given request data.
 
+    Args:
+        request (FetalHealthData): The request data containing the fetal health parameters.
+
+    Returns:
+        dict: A dictionary containing the prediction of the fetal health.
+
+    Raises:
+        None
+    """
+    global loaded_model
     received_data = np.array([
         request.accelerations,
         request.fetal_movement,
@@ -87,6 +120,7 @@ def predict(request: FetalHeathData):
     ]).reshape(1, -1)
 
     print(received_data)
-    print(loaded_model.predict(received_data))
+    prediction = loaded_model.predict(received_data)
+    print(prediction)
 
-    return {"prediction": 0}
+    return {"prediction": str(np.argmax(prediction[0]))}
