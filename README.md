@@ -75,15 +75,15 @@ The predictive model used classifies the exam readings into three classes:
 
 - Create a ```Dockerfile``` that defines how to build your Docker image.
   
-- Build the Docker image locally using ```docker build -t <image_name>```.
+- Build the Docker image locally using ```$ docker build -t <image_name>```.
   
-- Test the image locally with ```docker run -p <port>:<port> <image_name>```.
+- Test the image locally with ```$ docker run -p <port>:<port> <image_name>```.
   
 - Create a DockerHub account.
   
-- Tag the image with your DockerHub username and repository name using ```docker tag <image_name> <username>/<repository>:<tag>```.
+- Tag the image with your DockerHub username and repository name using ```$ docker tag <image_name> <username>/<repository>:<tag>```.
   
-- Push the image to DockerHub using ```docker push <username>/<repository>:<tag>```.
+- Push the image to DockerHub using ```$ docker push <username>/<repository>:<tag>```.
 
   ## Create a Resource on Azure
 
@@ -100,3 +100,18 @@ The predictive model used classifies the exam readings into three classes:
 - Azure will pull the image from DockerHub and deploy it as a container.
 
 - Once the container is running, you can access your application through the assigned public IP address or domain.
+
+## Load test
+
+- Install Locust:
+
+- ```$ sudo apt install python3-locust```
+
+- In the main directory, run the ```locustfile.py``` program with the command:
+
+- ```$ locust```
+
+- Starting web interface at ```http://0.0.0.0:8089```
+
+- Start the tests: Number of users: 100 users, Ramp up: 10 users and Host: container address in Azure.
+
