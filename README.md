@@ -71,3 +71,32 @@ The predictive model used classifies the exam readings into three classes:
 
 - ```http://127.0.0.1:8000/docs```
 
+## Create a Docker Image
+
+- Create a ```Dockerfile``` that defines how to build your Docker image.
+  
+- Build the Docker image locally using ```docker build -t <image_name>```.
+  
+- Test the image locally with ```docker run -p <port>:<port> <image_name>```.
+  
+- Create a DockerHub account.
+  
+- Tag the image with your DockerHub username and repository name using ```docker tag <image_name> <username>/<repository>:<tag>```.
+  
+- Push the image to DockerHub using ```docker push <username>/<repository>:<tag>```.
+
+  ## Create a Resource on Azure
+
+- Create a signature.
+
+- Create a new resource.
+
+- Create a Container Instance and provide the DockerHub image details (image name and tag).
+
+### Deploy the Container on Azure
+
+- After configuring the container settings, create the resource.
+
+- Azure will pull the image from DockerHub and deploy it as a container.
+
+- Once the container is running, you can access your application through the assigned public IP address or domain.
