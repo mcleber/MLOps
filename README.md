@@ -85,7 +85,7 @@ The predictive model used classifies the exam readings into three classes:
   
 - Push the image to DockerHub using ```$ docker push <username>/<repository>:<tag>```.
 
-  ## Create a Resource on Azure
+## Create a Resource on Azure
 
 - Create a signature.
 
